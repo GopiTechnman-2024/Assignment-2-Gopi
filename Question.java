@@ -1,6 +1,6 @@
 import java.util.List;
 
-class Question {
+public class Question {
     private int questionId;
     private List<Answer> answers;
     private String answerKey;

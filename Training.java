@@ -2,7 +2,6 @@ import java.util.jar.JarEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Training{
     public static void main(String[] args) {
 
@@ -82,17 +81,15 @@ public class Training{
         a3.add(a32);
         a3.add(a33);
         a3.add(a34);
-        private int questionId;
-        private List<Answer> answers;
-        private String answerKey;
-        private int score;
-        private int techStackId;
-        private int assignmentId;
+        // private int questionId;
+        // private List<Answer> answers;
+        // private String answerKey;
+        // private int score;
+        // private int techStackId;
+        // private int assignmentId;
         // Questions:
-        Question q11=new Question(11, a1, 1, score, 3, 1);
-        Question q12=new Question(12, a2, 2, score, 4, 1);
-        Question q13=new Question(13, a3, 3, score, 5, 1);
-        Question q14=new Question(14, a4, 4, score, 1, 1);
+        Question q11=new Question(1, a3, "1", 3, 3, 2);
+        
 
 
 
