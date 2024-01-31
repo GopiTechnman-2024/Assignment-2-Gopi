@@ -78,4 +78,15 @@ public class Assignment {
     public int hashCode() {
         return Objects.hash(assignmentId, title, description, dueDate, questions);
     }
+
+    @Override
+    public String toString() {
+        return "Assignment{" +
+                "assignmentId=" + assignmentId +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", dueDate='" + dueDate + '\'' +
+                ", questions=" + questions +
+                '}';
+    }
 }

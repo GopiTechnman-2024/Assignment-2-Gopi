@@ -1,99 +1,161 @@
-import java.util.jar.JarEntry;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
-public class Training{
+public class Training {
     public static void main(String[] args) {
+        // Create students
+        List<Student> students = createStudents(10);
 
-        //1. Create 10 students Objects
-        Student s1=new Student(1, "Aditi", "aditi@gmail.com", "1234561231");
-        System.out.println(s1);
-        Student s2=new Student(1, "Amol", "amol@gmail.com", "1234561232");
-        Student s3=new Student(1, "Bhavya", "bhavya@gmail.com", "1234561233");
-        Student s4=new Student(1, "Chirag", "Chirag@gmail.com", "1234561234");
-        Student s5=new Student(1, "Devang", "devnag@gmail.com", "1234561235");
-        Student s6=new Student(1, "Ridhdhi", "ridhdhi@gmail.com", "1234561236");
-        Student s7=new Student(1, "Viha", "viha@gmail.com", "1234561237");
-        Student s8=new Student(1, "Yashvi", "yashvi@gmail.com", "1234561238");
-        Student s9=new Student(1, "Uday", "uday@gmail.com", "1234561239");
-        Student s10=new Student(1, "Zallari", "zallari@gmail.com", "1234561299");
+        // Create trainers
+        List<Trainer> trainers = createTrainers(3);
 
-        //2.Create 3 trainers
-        TechStack ts11=new TechStack(1, "Cpp", "Google uses Cpp");
-        TechStack ts12=new TechStack(2, "Java", "Java is amazing");
-        TechStack ts21=new TechStack(3, ".NET", "Most people do not like this language");
-        TechStack ts22=new TechStack(4, "Ruby", "Ruby on Rails is famous");
-        TechStack ts31=new TechStack(5, "Python", "It is in a boom");
-        List<TechStack> tl1=new ArrayList<>();
-        tl1.add(ts11);
-        tl1.add(ts12);
-        List<TechStack> tl2=new ArrayList<>();
-        tl2.add(ts21);
-        tl2.add(ts22);
-        List<TechStack> tl3=new ArrayList<>();
-        tl3.add(ts21);
-        tl3.add(ts11);
-        Trainer t1=new Trainer(1, "Jay", "jay@Gmail.com", "5637489123", tl1);
-        System.out.println(t1);
-       
-       
-        Trainer t2=new Trainer(2, "Jeni", "jeni@Gmail.com", "6637489123", tl2);
-        System.out.println(t2);
-        Trainer t3=new Trainer(3, "Suryadip", "suryadip@Gmail.com", "7637489123", tl3);
-        System.out.println(t3);
+        // Create tech stacks
+        List<TechStack> techStacks = createTechStacks(5);
 
-        // creating ans 
+        // Create assignments with questions
+        List<Assignment> assignments = createAssignments(4, 4, techStacks);
 
-        Answer a11=new Answer(11, "ans11");
-        Answer a12=new Answer(12, "ans12");
-        Answer a13=new Answer(13, "ans13");
-        Answer a14=new Answer(14, "ans14");
+        // Create results
+        List<Result> results = createResults(students, assignments, trainers);
 
-        Answer a21=new Answer(21, "ans21");
-        Answer a22=new Answer(22, "ans22");
-        Answer a23=new Answer(23, "ans23");
-        Answer a24=new Answer(24, "ans24");
+        // Create ResultData
+        ResultData resultData = new ResultData(results);
 
-        Answer a31=new Answer(31, "ans31");
-        Answer a32=new Answer(32, "ans32");
-        Answer a33=new Answer(33, "ans33");
-        Answer a34=new Answer(34, "ans34");
+        // Calculate the highest-performing student
+        Student highestPerformingStudent = resultData.findHighestPerformingStudent();
+        System.out.println("Highest Performing Student: " + highestPerformingStudent.getName());
+        System.out.println("Percentage: " + highestPerformingStudent.calculateOverallPercentage(resultData));
 
-        Answer a41=new Answer(41, "ans41");
-        Answer a42=new Answer(42, "ans42");
-        Answer a43=new Answer(43, "ans43");
-        Answer a44=new Answer(44, "ans44");
+        // Display all results
+        System.out.println("All Results: ");
+        System.out.println(resultData.printUniqueStudentInfo());
 
-        List<Answer> a1=new ArrayList<>();
-        a1.add(a11);
-        a1.add(a12);
-        a1.add(a13);
-        a1.add(a14);
-
-        List<Answer> a2=new ArrayList<>();
-        a2.add(a21);
-        a2.add(a22);
-        a2.add(a23);
-        a2.add(a24);
-
-        List<Answer> a3=new ArrayList<>();
-        a3.add(a31);
-        a3.add(a32);
-        a3.add(a33);
-        a3.add(a34);
-        // private int questionId;
-        // private List<Answer> answers;
-        // private String answerKey;
-        // private int score;
-        // private int techStackId;
-        // private int assignmentId;
-        // Questions:
-        Question q11=new Question(11, a1, 1, score, 3, 1);
-        Question q12=new Question(12, a2, 2, score, 4, 1);
-        Question q13=new Question(13, a3, 3, score, 5, 1);
-        Question q14=new Question(14, a4, 4, score, 1, 1);
+        Student secondhighestPerformingStudent = resultData.findSecondHighestPerformingStudent();
+        System.out.println("Second highest student :");
+        System.out.println(secondhighestPerformingStudent.getName());
+        System.out.println(secondhighestPerformingStudent.calculateOverallPercentage(resultData));
 
 
 
+        List<Student> overallRanking = resultData.findOverallRanking();
+        
+        System.out.println("Overall Ranking by Scores:");
+        for (int i = 0; i < overallRanking.size(); i++) {
+            System.out.println((i + 1) + ". " + overallRanking.get(i).getName());
+        }
+
+        System.out.println("List of studnets who needs improvement:");
+       List<Student> ListofstudentsforImprovement= resultData.getStudentsNeedImprovement();
+       for (int i = 0; i < ListofstudentsforImprovement.size(); i++) {
+        System.out.println((i + 1) + ". " +ListofstudentsforImprovement.get(i).getName());
+    }
+
+      // Test case: Get all results for student "student10"
+      List<Result> student10Results = resultData.getResultsForStudent("Student10");
+
+      if (student10Results != null) {
+          System.out.println("Results for student10:");
+          for (Result result : student10Results) {
+              System.out.println("Result ID: " + result.getResultId());
+              System.out.println("Assignment: " + result.getAssignment().getTitle());
+              System.out.println("Score: " + result.getScore());
+              System.out.println("Feedback: " + result.getFeedback());
+              System.out.println("Submission Date: " + result.getSubmissionDate());
+              System.out.println("------------------------------");
+          }
+      } else {
+          System.out.println("Student not found.");
+      }
+
+      // Get all students' results and their scores on all individual assignments and questions
+      List<Student> allStudents = resultData.getAllStudents();
+        
+      for (Student student : allStudents) {
+          System.out.println("Results for " + student.getName() + ":");
+          
+          List<Result> studentResults = resultData.getResultsByStudent(student);
+          
+          for (Result result : studentResults) {
+              System.out.println("Assignment: " + result.getAssignment().getTitle());
+              System.out.println("Score: " + result.getScore());
+              System.out.println("Feedback: " + result.getFeedback());
+              
+              for (Question question : result.getAssignment().getQuestions()) {
+                  System.out.println("  Question: " + question.getQuestionId());
+                  System.out.println("    Score: " + result.getScore()); // You may want to retrieve question-specific scores here
+              }
+              
+              System.out.println("------------------------------");
+          }
+          
+          System.out.println();
+      }
+    }
+
+        
+    
+
+    private static List<Student> createStudents(int count) {
+        List<Student> students = new ArrayList<>();
+        for (int i = 1; i <= count; i++) {
+            students.add(new Student(i, "Student" + i, "email" + i + "@example.com", "123456789" + i));
+        }
+        return students;
+    }
+
+    private static List<Trainer> createTrainers(int count) {
+        List<Trainer> trainers = new ArrayList<>();
+        for (int i = 1; i <= count; i++) {
+            trainers.add(new Trainer(i, "Trainer" + i, "trainer" + i + "@example.com", "987654321" + i, new ArrayList<>()));
+        }
+        return trainers;
+    }
+
+    private static List<TechStack> createTechStacks(int count) {
+        List<TechStack> techStacks = new ArrayList<>();
+        for (int i = 1; i <= count; i++) {
+            techStacks.add(new TechStack(i, "TechStack" + i, "Description" + i));
+        }
+        return techStacks;
+    }
+
+    private static List<Assignment> createAssignments(int assignmentCount, int questionsPerAssignment, List<TechStack> techStacks) {
+        List<Assignment> assignments = new ArrayList<>();
+        for (int i = 1; i <= assignmentCount; i++) {
+            Assignment assignment = new Assignment(i, "Assignment" + i, "Description" + i, "2022-02-01", new ArrayList<>());
+            for (int j = 1; j <= questionsPerAssignment; j++) {
+                List<Answer> answers = createAnswers(4);
+                int techStackId = techStacks.get(new Random().nextInt(techStacks.size())).getTechStackId();
+                assignment.getQuestions().add(new Question(j, answers, "Key" + j, 10, techStackId, assignment.getAssignmentId()));
+            }
+            assignments.add(assignment);
+        }
+        return assignments;
+    }
+
+    private static List<Answer> createAnswers(int answerCount) {
+        List<Answer> answers = new ArrayList<>();
+        for (int i = 1; i <= answerCount; i++) {
+            answers.add(new Answer(i, "Answer" + i));
+        }
+        return answers;
+    }
+
+    private static List<Result> createResults(List<Student> students, List<Assignment> assignments, List<Trainer> trainers) {
+        List<Result> results = new ArrayList<>();
+        int resultId = 1;
+        for (Student student : students) {
+            for (Assignment assignment : assignments) {
+                for (Trainer trainer : trainers) {
+                    int score = (int) (Math.random() * 10) + 1; // Random score between 1 and 10
+                    results.add(new Result(resultId++, student, assignment, trainer, score, "Feedback", "2022-02-01"));
+                }
+            }
+        }
+        return results;
     }
 }

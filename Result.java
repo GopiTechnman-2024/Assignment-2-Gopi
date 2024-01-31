@@ -97,4 +97,17 @@ class Result {
     public int hashCode() {
         return Objects.hash(resultId, student, assignment, trainer, score, feedback, submissionDate);
     }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "resultId=" + resultId +
+                ", student=" + student +
+                ", assignment=" + assignment +
+                ", trainer=" + trainer +
+                ", score=" + score +
+                ", feedback='" + feedback + '\'' +
+                ", submissionDate='" + submissionDate + '\'' +
+                '}';
+    }
 }

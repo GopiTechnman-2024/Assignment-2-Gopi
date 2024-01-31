@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Objects;
 
 public class Student {
@@ -62,6 +63,8 @@ public class Student {
                Objects.equals(contactNumber, student.contactNumber);
     }
 
+    
+
     @Override
     public int hashCode() {
         return Objects.hash(studentId, name, email, contactNumber);
@@ -74,6 +77,32 @@ public class Student {
                 ", email='" + email + '\'' +
                 ", contactNumber='" + contactNumber + '\'' +
                 '}';
+    }
+
+    public double calculateOverallPercentage(ResultData resultData) {
+        List<Result> results = resultData.getResultsByStudent(this);
+
+        if (results.isEmpty()) {
+            return 0.0;  // Avoid division by zero
+        }
+
+        double totalScore = results.stream()
+                .mapToDouble(Result::getScore)
+                .sum();
+
+        double totalPossibleScore = results.size() * maximumScorePerResult();  // Adjust this based on your scoring system
+
+        if (totalPossibleScore == 0) {
+            return 0.0;  // Avoid division by zero
+        }
+
+        return (totalScore / totalPossibleScore) * 100;
+    }
+
+    private double maximumScorePerResult() {
+        // You need to define how much a single result contributes to the total score
+        // Adjust this based on your scoring system
+        return 10.0;  // Example: Each result has a maximum score of 10
     }
 
 }

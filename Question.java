@@ -77,7 +77,7 @@ public String toString() {
             ", answerKey='" + answerKey + '\'' +
             ", score=" + score +
             ", techStackId=" + techStackId +
-            ", assignment=" + assignment +
+            ", assignment=" + assignmentId +
             '}';
 }
 
